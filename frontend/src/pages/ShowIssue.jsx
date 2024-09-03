@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { AiOutlineEdit } from "react-icons/ai";
+import { MdOutlineDelete } from "react-icons/md";
 import BackButton from "../components/BackButton";
 
 const ShowIssue = () => {
@@ -23,24 +25,44 @@ const ShowIssue = () => {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="container mx-auto p-4">
       <BackButton />
-      <h1 className="text-3xl my-4">Show Issue</h1>
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Issue Details</h1>
       {loading ? (
-        <div>Loading...</div>
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
       ) : (
-        <div className="flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4">
-          <div className="my-4">
-            <span className="text-xl mr-4 text-gray-500">Id</span>
-            <span>{issue.id}</span>
-          </div>
-          <div className="my-4">
-            <span className="text-xl mr-4 text-gray-500">Title</span>
-            <span>{issue.title}</span>
-          </div>
-          <div className="my-4">
-            <span className="text-xl mr-4 text-gray-500">Description</span>
-            <span>{issue.description}</span>
+        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <div className="p-6">
+            <div className="mb-4">
+              <h2 className="text-2xl font-semibold text-gray-800 pb-8">
+                {issue.title}
+              </h2>
+              <p className="text-sm text-gray-500">ID: {issue.id}</p>
+            </div>
+            <div className="mb-6">
+              <h3 className="text-lg font-medium text-gray-700 mb-2">
+                Description
+              </h3>
+              <p className="text-gray-600">{issue.description}</p>
+            </div>
+            <div className="flex space-x-4">
+              <Link
+                to={`/issues/edit/${issue.id}`}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+              >
+                <AiOutlineEdit className="mr-2" />
+                Edit
+              </Link>
+              <Link
+                to={`/issues/delete/${issue.id}`}
+                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+              >
+                <MdOutlineDelete className="mr-2" />
+                Delete
+              </Link>
+            </div>
           </div>
         </div>
       )}
