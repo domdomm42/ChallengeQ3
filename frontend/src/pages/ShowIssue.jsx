@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
 import BackButton from "../components/BackButton";
+import Spinner from "../components/Spinner";
 
 const ShowIssue = () => {
   const [issue, setIssue] = useState({});
@@ -30,7 +31,7 @@ const ShowIssue = () => {
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Issue Details</h1>
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+          <Spinner size="small" />
         </div>
       ) : (
         <div className="bg-white shadow-md rounded-lg overflow-hidden">

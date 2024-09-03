@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import BackButton from "../components/BackButton";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 const DeleteIssue = () => {
   const [issue, setIssue] = useState(null);
@@ -39,28 +40,45 @@ const DeleteIssue = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Spinner size="large" />
+      </div>
+    );
   }
 
   return (
-    <div className="p-4">
+    <div className="container mx-auto p-4">
       <BackButton />
-      <h1 className="text-3xl my-4">Delete Issue</h1>
-      <div className="flex flex-col border-2 border-red-400 rounded-xl w-[600px] p-4 mx-auto">
-        <p className="text-xl my-4 text-gray-500">
-          Are you sure you want to delete this issue?
-        </p>
-        <div className="my-4">
-          <p>
-            <strong>Title:</strong> {issue.title}
-          </p>
-          <p>
-            <strong>Description:</strong> {issue.description}
-          </p>
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Delete Issue</h1>
+      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="p-6">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            Are you sure you want to delete this issue?
+          </h2>
+          <div className="mb-6">
+            <p className="text-gray-600">
+              <strong>Title:</strong> {issue.title}
+            </p>
+            <p className="text-gray-600">
+              <strong>Description:</strong> {issue.description}
+            </p>
+          </div>
+          <div className="flex justify-end space-x-4">
+            <button
+              onClick={() => navigate("/")}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleDeleteIssue}
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+            >
+              Delete
+            </button>
+          </div>
         </div>
-        <button className="p-2 bg-red-300 m-8" onClick={handleDeleteIssue}>
-          Delete
-        </button>
       </div>
     </div>
   );

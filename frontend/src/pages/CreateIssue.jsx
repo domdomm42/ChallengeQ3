@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
-
+import Spinner from "../components/Spinner";
 const CreateIssue = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -71,13 +71,7 @@ const CreateIssue = () => {
             disabled={loading}
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center"
           >
-            {loading ? (
-              <div className="flex justify-center items-center h-64">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
-              </div>
-            ) : (
-              "Save Issue"
-            )}
+            {loading ? <Spinner size="small" /> : "Save Issue"}
           </button>
         </div>
       </div>
