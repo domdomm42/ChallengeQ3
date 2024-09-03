@@ -9,11 +9,9 @@ const CreateIssue = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
   const handleSaveIssue = () => {
-    const data = {
-      title,
-      description,
-    };
+    const data = { title, description };
     setLoading(true);
     axios
       .post("http://localhost:5000/issues", data)
@@ -23,40 +21,65 @@ const CreateIssue = () => {
       })
       .catch((error) => {
         setLoading(false);
-        alert("An error has happened");
+        alert("An error has occurred");
         console.log(error);
       });
   };
 
   return (
-    <div className="p-4">
+    <div className="container mx-auto p-4">
       <BackButton />
-      <h1 className="text-3xl my-4">Create Issue</h1>
-      {loading ? <div>Loading...</div> : ""}
-      <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
-        <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
-          />
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">
+        Create New Issue
+      </h1>
+      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="p-6">
+          <div className="mb-4">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter issue title"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              rows="4"
+              placeholder="Enter issue description"
+            ></textarea>
+          </div>
+          <button
+            onClick={handleSaveIssue}
+            disabled={loading}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+          >
+            {loading ? (
+              <div className="flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+              </div>
+            ) : (
+              "Save Issue"
+            )}
+          </button>
         </div>
-
-        <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Description</label>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
-          />
-        </div>
-
-        <button className="p-2 bg-sky-300 m-8" onClick={handleSaveIssue}>
-          Save
-        </button>
       </div>
     </div>
   );
