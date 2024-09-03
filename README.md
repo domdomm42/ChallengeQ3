@@ -50,7 +50,9 @@
    npm install
    ```
 
-3. Start the frontend development server:
+3. Setup Tailwind
+
+4. Start the frontend development server:
    ```
    npm run dev
    ```
