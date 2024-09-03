@@ -62,4 +62,18 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// DELETE ISSUE BY ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedIssue = await Issue.findOneAndDelete({ id: req.params.id });
+    if (!deletedIssue) {
+      return res.status(404).send({ error: "Issue not found" });
+    }
+    console.log("Deleted:", req.params.id);
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
 export default router;
