@@ -38,4 +38,28 @@ router.post("/", async (req, res) => {
   }
 });
 
+// UPDATE ISSUE BY ID
+router.put("/:id", async (req, res) => {
+  try {
+    if (!req.body.title && !req.body.description) {
+      return res.status(400).send({
+        message: "Please add in a new title or description",
+      });
+    }
+
+    const updatedIssue = await Issue.findOneAndUpdate(
+      { id: req.params.id },
+      req.body,
+      { new: true }
+    );
+    if (!updatedIssue) {
+      return res.status(404).send({ error: "Issue not found" });
+    }
+    console.log("Updated:", updatedIssue);
+    res.send(updatedIssue);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
 export default router;
