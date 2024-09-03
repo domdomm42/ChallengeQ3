@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -24,55 +26,82 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl my-8">Issue List</h1>
-        <Link to="/issues/create">
-          <MdOutlineAddBox className="text-sky-800 text-4xl" />
+    <div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Issue Tracker</h1>
+        <Link
+          to="/issues/create"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+        >
+          <MdOutlineAddBox className="mr-2" />
+          <span>Add New Issue</span>
         </Link>
       </div>
       {loading ? (
-        <div>Loading...</div>
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
       ) : (
-        <table className="w-full border-separate border-spacing-2">
-          <thead>
-            <tr>
-              <th className="border border-slate-600 rounded-md">No</th>
-              <th className="border border-slate-600 rounded-md">Title</th>
-              <th className="border border-slate-600 rounded-md max-md:hidden">
-                Description
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {issues.map((issue, index) => (
-              <tr key={issue.id} className="h-8">
-                <td className="border border-slate-700 rounded-md text-center">
-                  {index + 1}
-                </td>
-                <td className="border border-slate-700 rounded-md text-center">
-                  {issue.title}
-                </td>
-                <td className="border border-slate-700 rounded-md text-center">
-                  {issue.description}
-                </td>
-                <td className="border border-slate-700 rounded-md text-center">
-                  <div className="flex justify-center gap-x-4">
-                    <Link to={`/issues/details/${issue.id}`}>
-                      <BsInfoCircle className="text-2xl text-green-800" />
-                    </Link>
-                    <Link to={`/issues/edit/${issue.id}`}>
-                      <AiOutlineEdit className="text-2xl text-yellow-600" />
-                    </Link>
-                    <Link to={`/issues/delete/${issue.id}`}>
-                      <MdOutlineDelete className="text-2xl text-red-600" />
-                    </Link>
-                  </div>
-                </td>
+        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <table className="w-full">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  No
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Title
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider max-md:hidden">
+                  Description
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {issues.map((issue, index) => (
+                <tr key={issue.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {index + 1}
+                  </td>
+                  <td
+                    className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 cursor-pointer"
+                    onClick={() => navigate(`/issues/details/${issue.id}`)}
+                  >
+                    {issue.title}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 max-md:hidden">
+                    {issue.description}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <div className="flex space-x-2">
+                      <Link
+                        to={`/issues/details/${issue.id}`}
+                        className="text-blue-600 hover:text-blue-900"
+                      >
+                        <BsInfoCircle className="text-xl" />
+                      </Link>
+                      <Link
+                        to={`/issues/edit/${issue.id}`}
+                        className="text-yellow-600 hover:text-yellow-900"
+                      >
+                        <AiOutlineEdit className="text-xl" />
+                      </Link>
+                      <Link
+                        to={`/issues/delete/${issue.id}`}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        <MdOutlineDelete className="text-xl" />
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
