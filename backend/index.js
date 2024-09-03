@@ -2,9 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
+import issuesRoute from "./routes/issuesRoute.js";
 
 dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -14,6 +14,8 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
+app.use("/issues", issuesRoute);
 
 mongoose
   .connect(process.env.MONGODB_URL)
