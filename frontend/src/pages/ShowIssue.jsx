@@ -21,6 +21,7 @@ const ShowIssue = () => {
         setLoading(false);
       });
   }, []);
+
   return (
     <div className="p-4">
       <BackButton />

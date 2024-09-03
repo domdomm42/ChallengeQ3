@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import CreateIssue from "./pages/CreateIssue";
 import ShowIssue from "./pages/ShowIssue";
 import EditIssue from "./pages/EditIssue";
+import DeleteIssue from "./pages/DeleteIssue";
 const App = () => {
   return (
     <Routes>
@@ -10,6 +11,7 @@ const App = () => {
       <Route path="/issues/create" element={<CreateIssue />} />
       <Route path="/issues/details/:id" element={<ShowIssue />} />
       <Route path="/issues/edit/:id" element={<EditIssue />} />
+      <Route path="/issues/delete/:id" element={<DeleteIssue />} />
     </Routes>
   );
 };
