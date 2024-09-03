@@ -26,4 +26,16 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// CREATE NEW ISSUE
+router.post("/", async (req, res) => {
+  try {
+    const newIssue = new Issue(req.body);
+    await newIssue.save();
+    console.log("Created new issue: ", newIssue);
+    res.status(201).send(newIssue);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
 export default router;
